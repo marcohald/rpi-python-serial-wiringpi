@@ -1,5 +1,7 @@
 # Pull base image
-FROM resin/rpi-raspbian:jessie
+FROM resin/armv7hf-debian-qemu
+ENV DEBIAN_FRONTEND noninteractive
+RUN [ "cross-build-start" ]
 MAINTAINER Andrew Cencini <andrew@vapor.io>
 
 # Install dependencies
@@ -17,6 +19,7 @@ RUN pip install pyserial
 RUN git clone git://git.drogon.net/wiringPi
 RUN cd wiringPi && ./build
 RUN pip install wiringpi2
+RUN [ "cross-build-end" ] 
 
 # Define working directory
 WORKDIR /data
